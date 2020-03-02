@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript">
+        var network = {
+            blockchain: "enigma",
+            chainId: "enigma-1"
+        };
+        var identity = {};
+
+        function login() {
+            // identity = {
+            //     account: "enigma1tjmq3dqxkd8gak30qwtdq5pwtuyfl7yp9aaj8q",
+            //     blockchain: "enigma",
+            //     chainId: "enigma-1"
+            // }
+            mathExtension.getIdentity(network).then(identity => {
+                this.identity = identity;
+                document.getElementById("loginDiv").innerHTML = JSON.stringify(identity);
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+        function logout() {
+            mathExtension.forgetIdentity().then(response => {
+                console.log(response);
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+        function signTransaction() {
+            var transaction = {
+                "sequence":"2",
+                "account_number":"63",
+                "chain_id":"enigma-1",
+                "fee":{
+                    "amount":[
+                        {"amount":"10","denom":"uscrt"}
+                    ],
+                    "gas":"200000"
+                },
+                "memo":"test",
+                "msgs":[
+                    {
+                        "type":"cosmos-sdk/MsgSend",
+                        "value":{
+                            "amount":[
+                                {"amount":"1000000","denom":"uscrt"}
+                            ],
+                            "from_address":this.identity.account,
+                            "to_address":"enigma1jvdskg9yeawq7ck8gnrvvmjgyvwxqrwezzwd2j"
+                        }
+                    }
+                ]
+            };
+            // 请求插件签名
+            mathExtension.requestSignature(transaction, network).then(signatrueJSON => {
+                document.getElementById("signatureDiv").innerHTML = JSON.stringify(signatrueJSON);
+                var signatureTx = {
+                    "tx":{
+                        "sequence":transaction.sequence,
+                        "account_number":transaction.account_number,
+                        "chain_id":transaction.chain_id,
+                        "msg":transaction.msgs,
+                        "memo":transaction.memo,
+                        "fee":transaction.fee,
+                        "signatures":[{
+                            ...signatrueJSON
+                        }]
+                    },
+                    "mode":"block"
+                };
+                console.log(JSON.stringify(signatureTx));
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+        function signMessage() {
+            var message = '{"test":"test"}';
+            // 请求插件签名
+            mathExtension.requestArbitrarySignature(identity.account,message, "title",false).then(signedMessge => {
+                console.log(JSON.stringify(signedMessge));
+                document.getElementById("messageSignatureDiv").innerHTML = JSON.stringify(signedMessge);
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div id="loginDiv"></div></br>
+    <button type="button" onclick="login()">Login</button></br></br>
+    <button type="button" onclick="logout()">Logout</button></br>
+    <div id="signatureDiv"></div></br>
+    <button type="button" onclick="signTransaction()">Other Transaction</button>
+    <div id="messageSignatureDiv"></div></br>
+    <button type="button" onclick="signMessage()">Sign Message</button>
+</body>
+
+</html>
