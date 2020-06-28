@@ -6,8 +6,8 @@
 ```
 // config network
 var network = {
-    blockchain: "engima",
-    chainId: "enigma-1"
+    blockchain: "sercetnetwork",
+    chainId: "sercet-1"
 };
 
 // login
