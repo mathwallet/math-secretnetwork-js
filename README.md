@@ -1,6 +1,6 @@
 # For Math Wallet DAPP Developer
 
-## Using Math Wallet Engima JS API
+## Using Math Wallet Secret Network JS API
 
 
 ```
