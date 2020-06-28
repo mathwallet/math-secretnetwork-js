@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script type="text/javascript">
         var network = {
-            blockchain: "enigma",
-            chainId: "enigma-1"
+            blockchain: "secretnetwork",
+            chainId: "secret-1"
         };
         var identity = {};
 
         function login() {
             // identity = {
-            //     account: "enigma1tjmq3dqxkd8gak30qwtdq5pwtuyfl7yp9aaj8q",
-            //     blockchain: "enigma",
-            //     chainId: "enigma-1"
+            //     account: "secret1dw99xuke4ayerty3fr52zsgrm4rh5g4kl802dl",
+            //     blockchain: "secretnetwork",
+            //     chainId: "secret-1"
             // }
             mathExtension.getIdentity(network).then(identity => {
                 this.identity = identity;
@@ -36,7 +36,7 @@
             var transaction = {
                 "sequence":"2",
                 "account_number":"63",
-                "chain_id":"enigma-1",
+                "chain_id":network.chainId,
                 "fee":{
                     "amount":[
                         {"amount":"10","denom":"uscrt"}
@@ -52,7 +52,7 @@
                                 {"amount":"1000000","denom":"uscrt"}
                             ],
                             "from_address":this.identity.account,
-                            "to_address":"enigma1jvdskg9yeawq7ck8gnrvvmjgyvwxqrwezzwd2j"
+                            "to_address":"secret1dw99xuke4ayerty3fr52zsgrm4rh5g4kl802dl"
                         }
                     }
                 ]
