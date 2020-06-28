@@ -17,7 +17,7 @@ mathExtension.getIdentity(network)
 mathExtension.forgetIdentity()
 
 // sign transaction
-mathExtension.requestSignature(transaction, network)
+mathExtension.requestSignature(transaction)
 ```
 
 For details, please find the sample in this repo.
